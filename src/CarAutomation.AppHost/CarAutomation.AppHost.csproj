@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WebApi\WebApi.csproj" />
+    <ProjectReference Include="..\CarAutomation.WebApi\CarAutomation.WebApi.csproj" />
   </ItemGroup>
 
 </Project>

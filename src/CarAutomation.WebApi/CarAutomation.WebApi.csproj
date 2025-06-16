@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CarAutomationManagementSystem.ServiceDefaults\CarAutomationManagementSystem.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\CarAutomation.ServiceDefaults\CarAutomation.ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project>
