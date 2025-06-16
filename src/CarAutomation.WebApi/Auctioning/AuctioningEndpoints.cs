@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace WebApi.Auctioning;
+namespace CarAutomation.WebApi.Auctioning;
 
 public static class AuctioningEndpoints
 {
     public static IEndpointConventionBuilder MapAuctioningEndpoints(this IEndpointRouteBuilder endpoints)
     {
-        var actioning = endpoints.MapGroup("/auctioning");
+        var actioning = endpoints
+            .MapGroup("/auctioning");
 
         actioning.MapPost("/start", StartAuction);
 

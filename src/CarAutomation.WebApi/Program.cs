@@ -1,8 +1,9 @@
 ﻿using System.Text.Json.Serialization;
+using CarAutomation.ServiceDefaults;
+using CarAutomation.WebApi;
+using CarAutomation.WebApi.Auctioning;
+using CarAutomation.WebApi.Vehicles;
 using Scalar.AspNetCore;
-using WebApi;
-using WebApi.Auctioning;
-using WebApi.VehicleCatalog;
 
 var builder = WebApplication.CreateBuilder(args);
 

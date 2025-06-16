@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
-namespace WebApi.VehicleCatalog;
+namespace CarAutomation.WebApi.Vehicles;
 
 public static class VehicleCatalogEndpoints
 {
@@ -42,21 +42,13 @@ public static class VehicleCatalogEndpoints
     {
         var query = dbContext.Vehicles.AsQueryable();
         if (request.Type.HasValue)
-        {
             query = query.Where(x => x.Type == request.Type.Value);
-        }
         if (!string.IsNullOrEmpty(request.Manufacturer))
-        {
             query = query.Where(x => x.Manufacturer == request.Manufacturer);
-        }
         if (!string.IsNullOrEmpty(request.Model))
-        {
             query = query.Where(x => x.Model == request.Model);
-        }
         if (request.Year.HasValue)
-        {
             query = query.Where(x => x.Year == request.Year.Value);
-        }
 
         var vehicles = await query.ToListAsync();
 

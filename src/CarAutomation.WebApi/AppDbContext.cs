@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace WebApi;
+namespace CarAutomation.WebApi;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {

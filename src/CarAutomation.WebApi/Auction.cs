@@ -1,4 +1,4 @@
-﻿namespace WebApi;
+﻿namespace CarAutomation.WebApi;
 
 public record Auction(
     Guid AuctionId,

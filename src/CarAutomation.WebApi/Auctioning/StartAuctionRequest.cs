@@ -1,4 +1,4 @@
-﻿namespace WebApi.Auctioning;
+﻿namespace CarAutomation.WebApi.Auctioning;
 
 public record StartAuctionRequest(Guid VehicleId, DateTimeOffset StartDate, DateTimeOffset EndDate);
 

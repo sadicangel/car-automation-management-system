@@ -1,3 +1,3 @@
-﻿namespace WebApi.Auctioning;
+﻿namespace CarAutomation.WebApi.Auctioning;
 
 public record PlaceBidRequest(Guid AuctionId, decimal BidAmount);

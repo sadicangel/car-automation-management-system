@@ -1,4 +1,4 @@
-﻿namespace WebApi;
+﻿namespace CarAutomation.WebApi;
 
 public enum VehicleType { Sedan, Suv, Hatchback, Truck }
 

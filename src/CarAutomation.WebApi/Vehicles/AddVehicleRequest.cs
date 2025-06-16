@@ -1,4 +1,4 @@
-﻿namespace WebApi.VehicleCatalog;
+﻿namespace CarAutomation.WebApi.Vehicles;
 
 public record AddVehicleRequest(
     string Vin,
