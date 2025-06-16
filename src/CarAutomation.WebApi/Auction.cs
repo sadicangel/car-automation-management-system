@@ -6,7 +6,7 @@ public record Auction(
     decimal StartingBid,
     bool IsActive,
     DateTimeOffset StartDate,
-    DateTimeOffset EndDate)
+    DateTimeOffset? EndDate)
 {
     public bool IsActive { get; set; } = IsActive;
     public Vehicle Vehicle { get; init; } = default!;

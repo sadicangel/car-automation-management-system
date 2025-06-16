@@ -7,7 +7,9 @@ public static class VehicleCatalogEndpoints
 {
     public static IEndpointConventionBuilder MapVehicleCatalogEndpoints(this IEndpointRouteBuilder endpoints)
     {
-        var vehicles = endpoints.MapGroup("/vehicles");
+        var vehicles = endpoints
+            .MapGroup("/vehicles")
+            .WithValidation();
 
         vehicles.MapPost("/", AddVehicle);
 

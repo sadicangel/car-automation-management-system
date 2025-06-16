@@ -7,7 +7,8 @@ public static class AuctioningEndpoints
     public static IEndpointConventionBuilder MapAuctioningEndpoints(this IEndpointRouteBuilder endpoints)
     {
         var actioning = endpoints
-            .MapGroup("/auctioning");
+            .MapGroup("/auctioning")
+            .WithValidation();
 
         actioning.MapPost("/start", StartAuction);
 
@@ -20,7 +21,8 @@ public static class AuctioningEndpoints
 
     private static async Task<Results<Ok<StartAuctionResponse>, ValidationProblem>> StartAuction(
         StartAuctionRequest request,
-        AppDbContext dbContext)
+        AppDbContext dbContext,
+        TimeProvider timeProvider)
     {
         var vehicle = await dbContext.FindAsync<Vehicle>(request.VehicleId);
         if (vehicle is null)
@@ -44,8 +46,8 @@ public static class AuctioningEndpoints
             VehicleId: vehicle.Id,
             StartingBid: vehicle.StartingBid,
             IsActive: true,
-            StartDate: request.StartDate.ToUniversalTime(),
-            EndDate: request.EndDate.ToUniversalTime());
+            StartDate: timeProvider.GetUtcNow(),
+            EndDate: null);
 
         dbContext.Auctions.Add(auction);
         await dbContext.SaveChangesAsync();
@@ -53,11 +55,7 @@ public static class AuctioningEndpoints
         return TypedResults.Ok(new StartAuctionResponse(
             auction.AuctionId,
             auction.VehicleId,
-            auction.StartingBid,
-            auction.IsActive,
-            auction.StartDate,
-            auction.EndDate,
-            auction.Bids));
+            auction.StartingBid));
     }
 
     private static async Task<Results<Ok, ValidationProblem>> CloseAuction(

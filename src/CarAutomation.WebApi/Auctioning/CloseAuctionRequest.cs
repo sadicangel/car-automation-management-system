@@ -1,3 +1,14 @@
-﻿namespace CarAutomation.WebApi.Auctioning;
+﻿using System.ComponentModel.DataAnnotations;
 
-public record CloseAuctionRequest(Guid AuctionId);
+namespace CarAutomation.WebApi.Auctioning;
+
+public record CloseAuctionRequest(Guid AuctionId) : IValidatableObject
+{
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        if (AuctionId == Guid.Empty)
+        {
+            yield return new ValidationResult($"Auction ID must be a valid identifier", [nameof(AuctionId)]);
+        }
+    }
+}
