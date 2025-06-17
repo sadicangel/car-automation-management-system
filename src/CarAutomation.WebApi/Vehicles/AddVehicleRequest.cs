@@ -10,8 +10,8 @@ public record AddVehicleRequest(
     int Year,
     int? NumberOfDoors,
     int? NumberOfSeats,
-    double? LoadCapacity,
-    decimal StartingBid)
+    double? LoadCapacityKg,
+    decimal StartingBidEur)
     : IValidatableObject
 {
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -31,14 +31,14 @@ public record AddVehicleRequest(
             yield return new ValidationResult("Model cannot be null or whitespace", [nameof(Manufacturer)]);
         }
 
-        if (Year < 0)
+        if (Year <= 0)
         {
             yield return new ValidationResult("Year must be a positive value", [nameof(Year)]);
         }
 
-        if (StartingBid < 0)
+        if (StartingBidEur <= 0)
         {
-            yield return new ValidationResult("Start bid must be a positive value", [nameof(StartingBid)]);
+            yield return new ValidationResult("Start bid must be a positive value", [nameof(StartingBidEur)]);
         }
 
         if (Type is VehicleType.Sedan or VehicleType.Hatchback && NumberOfDoors is not > 0)
@@ -51,7 +51,7 @@ public record AddVehicleRequest(
             yield return new ValidationResult($"'{Type}' vehicles must specify a number of seats greater than 0");
         }
 
-        if (Type is VehicleType.Truck && LoadCapacity is not > 0)
+        if (Type is VehicleType.Truck && LoadCapacityKg is not > 0)
         {
             yield return new ValidationResult($"'{Type}' vehicles must specify a load capacity greater than 0");
         }

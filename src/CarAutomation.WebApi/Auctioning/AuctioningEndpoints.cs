@@ -44,7 +44,7 @@ public static class AuctioningEndpoints
         var auction = new Auction(
             AuctionId: default,
             VehicleId: vehicle.Id,
-            StartingBid: vehicle.StartingBid,
+            StartingBidEur: vehicle.StartingBidEur,
             IsActive: true,
             StartDate: timeProvider.GetUtcNow(),
             EndDate: null);
@@ -55,7 +55,7 @@ public static class AuctioningEndpoints
         return TypedResults.Ok(new StartAuctionResponse(
             auction.AuctionId,
             auction.VehicleId,
-            auction.StartingBid));
+            auction.StartingBidEur));
     }
 
     private static async Task<Results<Ok, ValidationProblem>> CloseAuction(
@@ -101,11 +101,11 @@ public static class AuctioningEndpoints
             });
         }
 
-        if (request.BidAmount < auction.StartingBid)
+        if (request.BidAmount < auction.StartingBidEur)
         {
             return TypedResults.ValidationProblem(new Dictionary<string, string[]>
             {
-                [nameof(PlaceBidRequest.BidAmount)] = [$"Bid amount cannot be less than starting bid ({auction.StartingBid})"]
+                [nameof(PlaceBidRequest.BidAmount)] = [$"Bid amount cannot be less than starting bid ({auction.StartingBidEur})"]
             });
         }
 

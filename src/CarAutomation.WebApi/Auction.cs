@@ -3,7 +3,7 @@
 public record Auction(
     Guid AuctionId,
     Guid VehicleId,
-    decimal StartingBid,
+    decimal StartingBidEur,
     bool IsActive,
     DateTimeOffset StartDate,
     DateTimeOffset? EndDate)

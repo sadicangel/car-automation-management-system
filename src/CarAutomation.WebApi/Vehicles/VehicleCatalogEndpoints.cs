@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace CarAutomation.WebApi.Vehicles;
 
@@ -18,7 +19,7 @@ public static class VehicleCatalogEndpoints
         return vehicles;
     }
 
-    private static async Task<Results<Created<Vehicle>, Conflict>> AddVehicle(AddVehicleRequest request, AppDbContext dbContext)
+    private static async Task<Results<Created<Vehicle>, Conflict<string>>> AddVehicle(AddVehicleRequest request, AppDbContext dbContext)
     {
         var vehicle = new Vehicle(
             default,
@@ -29,11 +30,19 @@ public static class VehicleCatalogEndpoints
             request.Year,
             request.NumberOfDoors,
             request.NumberOfSeats,
-            request.LoadCapacity,
-            request.StartingBid);
+            request.LoadCapacityKg,
+            request.StartingBidEur);
 
         dbContext.Vehicles.Add(vehicle);
-        await dbContext.SaveChangesAsync();
+
+        try
+        {
+            await dbContext.SaveChangesAsync();
+        }
+        catch (DbUpdateException ex) when (ex.InnerException is PostgresException { SqlState: PostgresErrorCodes.UniqueViolation })
+        {
+            return TypedResults.Conflict($"A vehicle with VIN '{request.Vin}' already exists");
+        }
 
         return TypedResults.Created(default(string), vehicle);
     }

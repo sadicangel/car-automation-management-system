@@ -11,5 +11,5 @@ public record Vehicle(
     int Year,
     int? NumberOfDoors,
     int? NumberOfSeats,
-    double? LoadCapacity,
-    decimal StartingBid);
+    double? LoadCapacityKg,
+    decimal StartingBidEur);
