@@ -17,6 +17,14 @@ public static class PlaceBidEndpoint
             return TypedResults.NotFound();
         }
 
+        if (!auction.IsActive)
+        {
+            return TypedResults.ValidationProblem(new Dictionary<string, string[]>
+            {
+                ["AuctionId"] = [$"Auction '{request.AuctionId}' is no longer active"]
+            });
+        }
+
         if (request.BidAmount < auction.StartingBidEur)
         {
             return TypedResults.ValidationProblem(new Dictionary<string, string[]>
