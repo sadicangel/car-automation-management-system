@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CarAutomation.Domain.Auctions;
+using CarAutomation.Domain.Vehicles;
+using Microsoft.EntityFrameworkCore;
 
-namespace CarAutomation.WebApi;
+namespace CarAutomation.Domain;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {

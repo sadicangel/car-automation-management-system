@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarAutomation.WebApi.Tests", "tests\CarAutomation.WebApi.Tests\CarAutomation.WebApi.Tests.csproj", "{E05CAD55-5925-47E5-BE71-1850B60CACF2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarAutomation.Domain", "src\CarAutomation.Domain\CarAutomation.Domain.csproj", "{D8A618FB-0BC6-DB74-ED33-B7E944A7CD40}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,6 +82,18 @@ Global
 		{E05CAD55-5925-47E5-BE71-1850B60CACF2}.Release|x64.Build.0 = Release|Any CPU
 		{E05CAD55-5925-47E5-BE71-1850B60CACF2}.Release|x86.ActiveCfg = Release|Any CPU
 		{E05CAD55-5925-47E5-BE71-1850B60CACF2}.Release|x86.Build.0 = Release|Any CPU
+		{D8A618FB-0BC6-DB74-ED33-B7E944A7CD40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8A618FB-0BC6-DB74-ED33-B7E944A7CD40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8A618FB-0BC6-DB74-ED33-B7E944A7CD40}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D8A618FB-0BC6-DB74-ED33-B7E944A7CD40}.Debug|x64.Build.0 = Debug|Any CPU
+		{D8A618FB-0BC6-DB74-ED33-B7E944A7CD40}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D8A618FB-0BC6-DB74-ED33-B7E944A7CD40}.Debug|x86.Build.0 = Debug|Any CPU
+		{D8A618FB-0BC6-DB74-ED33-B7E944A7CD40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8A618FB-0BC6-DB74-ED33-B7E944A7CD40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8A618FB-0BC6-DB74-ED33-B7E944A7CD40}.Release|x64.ActiveCfg = Release|Any CPU
+		{D8A618FB-0BC6-DB74-ED33-B7E944A7CD40}.Release|x64.Build.0 = Release|Any CPU
+		{D8A618FB-0BC6-DB74-ED33-B7E944A7CD40}.Release|x86.ActiveCfg = Release|Any CPU
+		{D8A618FB-0BC6-DB74-ED33-B7E944A7CD40}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

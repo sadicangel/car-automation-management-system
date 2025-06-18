@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
+﻿using System.Security.Cryptography;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Npgsql;
@@ -11,7 +12,7 @@ public sealed class WebApiFixture(PostgreSqlFixture postgreSqlFixture) : WebAppl
     {
         var connectionString = new NpgsqlConnectionStringBuilder(postgreSqlFixture.Container.GetConnectionString())
         {
-            Database = "car_automation_management_system"
+            Database = RandomNumberGenerator.GetHexString(16)
         }.ToString();
 
         builder.ConfigureHostConfiguration(config => config.AddInMemoryCollection(new Dictionary<string, string?>

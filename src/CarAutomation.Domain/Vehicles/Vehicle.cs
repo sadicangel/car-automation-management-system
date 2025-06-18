@@ -1,6 +1,4 @@
-﻿namespace CarAutomation.WebApi;
-
-public enum VehicleType { Sedan, Suv, Hatchback, Truck }
+﻿namespace CarAutomation.Domain.Vehicles;
 
 public record Vehicle(
     Guid Id,

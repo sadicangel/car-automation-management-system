@@ -1,0 +1,20 @@
+﻿using CarAutomation.WebApi.Vehicles.AddVehicle;
+using CarAutomation.WebApi.Vehicles.SearchVehicles;
+
+namespace CarAutomation.WebApi.Vehicles;
+
+public static class VehiclesEndpoints
+{
+    public static IEndpointConventionBuilder MapVehiclesEndpoints(this IEndpointRouteBuilder endpoints)
+    {
+        var vehicles = endpoints
+            .MapGroup("/vehicles")
+            .WithValidation();
+
+        vehicles.MapPost("/", AddVehicleEndpoint.AddVehicle);
+
+        vehicles.MapGet("/", SearchVehiclesEndpoint.SearchVehicles);
+
+        return vehicles;
+    }
+}

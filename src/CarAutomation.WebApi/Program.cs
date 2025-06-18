@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
+using CarAutomation.Domain;
 using CarAutomation.ServiceDefaults;
-using CarAutomation.WebApi;
-using CarAutomation.WebApi.Auctioning;
+using CarAutomation.WebApi.Auctions;
 using CarAutomation.WebApi.Vehicles;
 using Scalar.AspNetCore;
 
@@ -28,8 +28,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapVehicleCatalogEndpoints();
-app.MapAuctioningEndpoints();
+app.MapVehiclesEndpoints();
+app.MapAuctionsEndpoints();
 
 using (var scope = app.Services.CreateScope())
 {

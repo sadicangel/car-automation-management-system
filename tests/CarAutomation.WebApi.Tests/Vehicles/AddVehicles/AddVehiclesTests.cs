@@ -2,7 +2,6 @@
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using CarAutomation.WebApi.Vehicles;
 
 namespace CarAutomation.WebApi.Tests.Vehicles.AddVehicles;
 
@@ -18,7 +17,7 @@ public class AddVehiclesTests(WebApiFixture fixture) : IClassFixture<WebApiFixtu
 
         var response = await httpClient.PostAsJsonAsync(
             "/vehicles",
-            Data.SedanRequest with { Vin = vin! },
+            TestData.SedanRequest with { Vin = vin! },
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
 
@@ -33,7 +32,7 @@ public class AddVehiclesTests(WebApiFixture fixture) : IClassFixture<WebApiFixtu
 
         var response = await httpClient.PostAsJsonAsync(
             "/vehicles",
-            Data.SedanRequest with { Manufacturer = manufacturer! },
+            TestData.SedanRequest with { Manufacturer = manufacturer! },
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
 
@@ -48,7 +47,7 @@ public class AddVehiclesTests(WebApiFixture fixture) : IClassFixture<WebApiFixtu
 
         var response = await httpClient.PostAsJsonAsync(
             "/vehicles",
-            Data.SedanRequest with { Model = model! },
+            TestData.SedanRequest with { Model = model! },
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
 
@@ -63,7 +62,7 @@ public class AddVehiclesTests(WebApiFixture fixture) : IClassFixture<WebApiFixtu
 
         var response = await httpClient.PostAsJsonAsync(
             "/vehicles",
-            Data.SedanRequest with { Year = year! },
+            TestData.SedanRequest with { Year = year! },
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
 
@@ -78,7 +77,7 @@ public class AddVehiclesTests(WebApiFixture fixture) : IClassFixture<WebApiFixtu
 
         var response = await httpClient.PostAsJsonAsync(
             "/vehicles",
-            Data.SedanRequest with { StartingBidEur = startingBid! },
+            TestData.SedanRequest with { StartingBidEur = startingBid! },
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
 
@@ -93,7 +92,7 @@ public class AddVehiclesTests(WebApiFixture fixture) : IClassFixture<WebApiFixtu
 
         var response = await httpClient.PostAsJsonAsync(
             "/vehicles",
-            Data.SedanRequest with { NumberOfDoors = numberOfDoors },
+            TestData.SedanRequest with { NumberOfDoors = numberOfDoors },
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
 
@@ -108,7 +107,7 @@ public class AddVehiclesTests(WebApiFixture fixture) : IClassFixture<WebApiFixtu
 
         var response = await httpClient.PostAsJsonAsync(
             "/vehicles",
-            Data.HatchbackRequest with { NumberOfDoors = numberOfDoors },
+            TestData.HatchbackRequest with { NumberOfDoors = numberOfDoors },
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
 
@@ -123,7 +122,7 @@ public class AddVehiclesTests(WebApiFixture fixture) : IClassFixture<WebApiFixtu
 
         var response = await httpClient.PostAsJsonAsync(
             "/vehicles",
-            Data.SuvRequest with { NumberOfSeats = numberOfSeats },
+            TestData.SuvRequest with { NumberOfSeats = numberOfSeats },
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
 
@@ -138,7 +137,7 @@ public class AddVehiclesTests(WebApiFixture fixture) : IClassFixture<WebApiFixtu
 
         var response = await httpClient.PostAsJsonAsync(
             "/vehicles",
-            Data.TruckRequest with { LoadCapacityKg = loadCapacity },
+            TestData.TruckRequest with { LoadCapacityKg = loadCapacity },
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
 
@@ -152,67 +151,16 @@ public class AddVehiclesTests(WebApiFixture fixture) : IClassFixture<WebApiFixtu
 
         await httpClient.PostAsJsonAsync(
             "/vehicles",
-            Data.SedanRequest,
+            TestData.SedanRequest,
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
 
         var response = await httpClient.PostAsJsonAsync(
             "/vehicles",
-            Data.SedanRequest,
+            TestData.SedanRequest,
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
 
         Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
     }
-}
-
-public static class Data
-{
-    public static readonly AddVehicleRequest SedanRequest = new(
-        Vin: "3FAHP0HA6AR123456",
-        Type: VehicleType.Sedan,
-        Manufacturer: "Honda",
-        Model: "Accord",
-        Year: 2021,
-        NumberOfDoors: 4,
-        NumberOfSeats: null,
-        LoadCapacityKg: null,
-        StartingBidEur: 12000.00m
-    );
-
-    public static readonly AddVehicleRequest HatchbackRequest = new(
-        Vin: "WVWZZZ1KZAW000123",
-        Type: VehicleType.Hatchback,
-        Manufacturer: "Volkswagen",
-        Model: "Golf",
-        Year: 2020,
-        NumberOfDoors: 5,
-        NumberOfSeats: null,
-        LoadCapacityKg: null,
-        StartingBidEur: 9500.00m
-    );
-
-    public static readonly AddVehicleRequest TruckRequest = new(
-        Vin: "1FTFW1ET1EFA12345",
-        Type: VehicleType.Truck,
-        Manufacturer: "Ford",
-        Model: "F-150",
-        Year: 2023,
-        NumberOfDoors: null,
-        NumberOfSeats: null,
-        LoadCapacityKg: 1200.0,
-        StartingBidEur: 25000.00m
-    );
-
-    public static readonly AddVehicleRequest SuvRequest = new(
-        Vin: "1HGCM82633A004352",
-        Type: VehicleType.Suv,
-        Manufacturer: "Toyota",
-        Model: "RAV4",
-        Year: 2022,
-        NumberOfDoors: null,
-        NumberOfSeats: 5,
-        LoadCapacityKg: null,
-        StartingBidEur: 15000.00m
-    );
 }

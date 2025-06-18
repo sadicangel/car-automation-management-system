@@ -1,8 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
     <OutputType>Exe</OutputType>
     <RootNamespace>CarAutomation.WebApi.Tests</RootNamespace>
     <TargetFramework>net9.0</TargetFramework>
