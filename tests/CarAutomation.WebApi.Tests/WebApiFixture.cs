@@ -1,6 +1,8 @@
 ﻿using System.Security.Cryptography;
+using CarAutomation.Domain;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Npgsql;
 
@@ -20,6 +22,13 @@ public sealed class WebApiFixture(PostgreSqlFixture postgreSqlFixture) : WebAppl
             ["ConnectionStrings:car-automation-management-system"] = connectionString
         }));
 
-        return base.CreateHost(builder);
+        var host = base.CreateHost(builder);
+
+        using (var scope = host.Services.CreateScope())
+        {
+            scope.ServiceProvider.GetRequiredService<AppDbContext>().Database.EnsureCreated();
+        }
+
+        return host;
     }
 }

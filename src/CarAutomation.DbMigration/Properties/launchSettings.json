@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "CarAutomation.DbMigration": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

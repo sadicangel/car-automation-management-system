@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CarAutomation.DbMigration\CarAutomation.DbMigration.csproj" />
     <ProjectReference Include="..\CarAutomation.WebApi\CarAutomation.WebApi.csproj" />
   </ItemGroup>
 
