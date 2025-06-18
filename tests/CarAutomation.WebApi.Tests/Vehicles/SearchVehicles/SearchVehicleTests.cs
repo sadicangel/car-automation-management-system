@@ -24,7 +24,10 @@ public sealed class SearchVehicleTests(PostgreSqlFixture postgreSqlFixture) : IA
     {
         var httpClient = _fixture.CreateClient();
 
-        var response = await httpClient.GetFromJsonAsync<SearchVehiclesResponse>("/vehicles", _jsonOptions, TestContext.Current.CancellationToken);
+        var response = await httpClient.GetFromJsonAsync<SearchVehiclesResponse>(
+            "/api/v1/vehicles",
+            _jsonOptions,
+            TestContext.Current.CancellationToken);
 
         Assert.NotNull(response);
         Assert.Equal(SearchVehicleTestData.Vehicles.Count, response.Vehicles.Count);
@@ -36,7 +39,10 @@ public sealed class SearchVehicleTests(PostgreSqlFixture postgreSqlFixture) : IA
     {
         var httpClient = _fixture.CreateClient();
 
-        var response = await httpClient.GetFromJsonAsync<SearchVehiclesResponse>($"/vehicles?type={type}", _jsonOptions, TestContext.Current.CancellationToken);
+        var response = await httpClient.GetFromJsonAsync<SearchVehiclesResponse>(
+            $"/api/v1/vehicles?type={type}",
+            _jsonOptions,
+            TestContext.Current.CancellationToken);
 
         Assert.NotNull(response);
         Assert.NotEmpty(response.Vehicles);
@@ -53,7 +59,10 @@ public sealed class SearchVehicleTests(PostgreSqlFixture postgreSqlFixture) : IA
     {
         var httpClient = _fixture.CreateClient();
 
-        var response = await httpClient.GetFromJsonAsync<SearchVehiclesResponse>($"/vehicles?manufacturer={manufacturer}", _jsonOptions, TestContext.Current.CancellationToken);
+        var response = await httpClient.GetFromJsonAsync<SearchVehiclesResponse>(
+            $"/api/v1/vehicles?manufacturer={manufacturer}",
+            _jsonOptions,
+            TestContext.Current.CancellationToken);
 
         Assert.NotNull(response);
         Assert.Equal(expectedCount, response.Vehicles.Count);
@@ -67,7 +76,10 @@ public sealed class SearchVehicleTests(PostgreSqlFixture postgreSqlFixture) : IA
     {
         var httpClient = _fixture.CreateClient();
 
-        var response = await httpClient.GetFromJsonAsync<SearchVehiclesResponse>($"/vehicles?manufacturer=Honda&model={model}", _jsonOptions, TestContext.Current.CancellationToken);
+        var response = await httpClient.GetFromJsonAsync<SearchVehiclesResponse>(
+            $"/api/v1/vehicles?manufacturer=Honda&model={model}",
+            _jsonOptions,
+            TestContext.Current.CancellationToken);
 
         Assert.NotNull(response);
         Assert.Equal(expectedCount, response.Vehicles.Count);
@@ -81,7 +93,10 @@ public sealed class SearchVehicleTests(PostgreSqlFixture postgreSqlFixture) : IA
     {
         var httpClient = _fixture.CreateClient();
 
-        var response = await httpClient.GetFromJsonAsync<SearchVehiclesResponse>($"/vehicles?year={year}", _jsonOptions, TestContext.Current.CancellationToken);
+        var response = await httpClient.GetFromJsonAsync<SearchVehiclesResponse>(
+            $"/api/v1/vehicles?year={year}",
+            _jsonOptions,
+            TestContext.Current.CancellationToken);
 
         Assert.NotNull(response);
         Assert.Equal(expectedCount, response.Vehicles.Count);

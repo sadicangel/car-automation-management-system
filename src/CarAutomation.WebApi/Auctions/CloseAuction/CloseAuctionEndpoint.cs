@@ -6,7 +6,7 @@ namespace CarAutomation.WebApi.Auctions.CloseAuction;
 
 public static class CloseAuctionEndpoint
 {
-    public static async Task<Results<Ok, NotFound, ValidationProblem>> CloseAuction(
+    public static async Task<Results<Ok<CloseAuctionResponse>, NotFound, ValidationProblem>> CloseAuction(
         CloseAuctionRequest request,
         AppDbContext dbContext,
         TimeProvider timeProvider)
@@ -26,10 +26,16 @@ public static class CloseAuctionEndpoint
         }
 
         auction.EndDate = timeProvider.GetUtcNow();
+        auction.IsActive = false;
 
         dbContext.Update(auction);
         await dbContext.SaveChangesAsync();
 
-        return TypedResults.Ok();
+        return TypedResults.Ok(new CloseAuctionResponse(
+            AuctionId: auction.AuctionId,
+            VehicleId: auction.VehicleId,
+            StartDate: auction.StartDate,
+            EndDate: auction.EndDate.Value,
+            HighestBidEur: auction.Bids.Select(x => x.Amount).DefaultIfEmpty(0).Max()));
     }
 }

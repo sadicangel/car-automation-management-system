@@ -28,8 +28,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapVehiclesEndpoints();
-app.MapAuctionsEndpoints();
+app.MapGroup("api/v1")
+    .MapVehiclesEndpoints()
+    .MapAuctionsEndpoints();
 
 app.Run();
 

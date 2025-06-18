@@ -20,7 +20,7 @@ public sealed class AddVehicleTests(PostgreSqlFixture postgreSqlFixture) : IAsyn
         var httpClient = _fixture.CreateClient();
 
         var response = await httpClient.PostAsJsonAsync(
-            "/vehicles",
+            "/api/v1/vehicles",
             AddVehicleTestData.SedanRequest,
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
@@ -38,13 +38,13 @@ public sealed class AddVehicleTests(PostgreSqlFixture postgreSqlFixture) : IAsyn
         var httpClient = _fixture.CreateClient();
 
         await httpClient.PostAsJsonAsync(
-            "/vehicles",
+            "/api/v1/vehicles",
             AddVehicleTestData.SedanRequest,
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
 
         var response = await httpClient.PostAsJsonAsync(
-            "/vehicles",
+            "/api/v1/vehicles",
             AddVehicleTestData.SedanRequest,
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);

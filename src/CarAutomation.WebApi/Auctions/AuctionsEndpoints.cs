@@ -6,10 +6,10 @@ namespace CarAutomation.WebApi.Auctions;
 
 public static class AuctionsEndpoints
 {
-    public static IEndpointConventionBuilder MapAuctionsEndpoints(this IEndpointRouteBuilder endpoints)
+    public static IEndpointRouteBuilder MapAuctionsEndpoints(this IEndpointRouteBuilder endpoints)
     {
         var actioning = endpoints
-            .MapGroup("/auctioning")
+            .MapGroup("/auctions")
             .WithValidation()
             .WithTags(nameof(AuctionsEndpoints));
 
@@ -19,6 +19,6 @@ public static class AuctionsEndpoints
 
         actioning.MapPost("/bid", PlaceBidEndpoint.PlaceBid);
 
-        return actioning;
+        return endpoints;
     }
 }

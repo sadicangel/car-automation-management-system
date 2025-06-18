@@ -7,7 +7,7 @@ namespace CarAutomation.WebApi.Auctions.StartAuction;
 
 public static class StartAuctionEndpoint
 {
-    public static async Task<Results<Ok<StartAuctionResponse>, BadRequest<string>>> StartAuction(
+    public static async Task<Results<Ok<StartAuctionResponse>, ValidationProblem>> StartAuction(
         StartAuctionRequest request,
         AppDbContext dbContext,
         TimeProvider timeProvider)
@@ -15,20 +15,26 @@ public static class StartAuctionEndpoint
         var vehicle = await dbContext.FindAsync<Vehicle>(request.VehicleId);
         if (vehicle is null)
         {
-            return TypedResults.BadRequest($"Vehicle '{request.VehicleId}' does not exist");
+            return TypedResults.ValidationProblem(new Dictionary<string, string[]>
+            {
+                ["VehicleId"] = [$"Vehicle '{request.VehicleId}' does not exist"]
+            });
         }
 
         if (dbContext.Auctions.Where(x => x.VehicleId == request.VehicleId).Any(x => x.IsActive))
         {
-            return TypedResults.BadRequest($"An auction is already active for vehicle '{request.VehicleId}'");
+            return TypedResults.ValidationProblem(new Dictionary<string, string[]>
+            {
+                ["VehicleId"] = [$"An auction is already active for vehicle '{request.VehicleId}'"]
+            });
         }
 
         var auction = new Auction
         {
-            AuctionId = default,
             VehicleId = vehicle.Id,
             StartingBidEur = vehicle.StartingBidEur,
             StartDate = timeProvider.GetUtcNow(),
+            IsActive = true,
         };
 
         dbContext.Auctions.Add(auction);

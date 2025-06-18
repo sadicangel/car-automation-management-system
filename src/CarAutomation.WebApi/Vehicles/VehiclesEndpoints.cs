@@ -5,7 +5,7 @@ namespace CarAutomation.WebApi.Vehicles;
 
 public static class VehiclesEndpoints
 {
-    public static IEndpointConventionBuilder MapVehiclesEndpoints(this IEndpointRouteBuilder endpoints)
+    public static IEndpointRouteBuilder MapVehiclesEndpoints(this IEndpointRouteBuilder endpoints)
     {
         var vehicles = endpoints
             .MapGroup("/vehicles")
@@ -16,6 +16,6 @@ public static class VehiclesEndpoints
 
         vehicles.MapGet("/", SearchVehiclesEndpoint.SearchVehicles);
 
-        return vehicles;
+        return endpoints;
     }
 }

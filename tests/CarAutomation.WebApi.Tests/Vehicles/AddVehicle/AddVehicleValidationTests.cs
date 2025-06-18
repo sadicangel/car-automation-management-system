@@ -16,7 +16,7 @@ public class AddVehicleValidationTests(WebApiFixture fixture) : IClassFixture<We
         var httpClient = fixture.CreateClient();
 
         var response = await httpClient.PostAsJsonAsync(
-            "/vehicles",
+            "/api/v1/vehicles",
             AddVehicleTestData.SedanRequest with { Vin = vin! },
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
@@ -31,7 +31,7 @@ public class AddVehicleValidationTests(WebApiFixture fixture) : IClassFixture<We
         var httpClient = fixture.CreateClient();
 
         var response = await httpClient.PostAsJsonAsync(
-            "/vehicles",
+            "/api/v1/vehicles",
             AddVehicleTestData.SedanRequest with { Manufacturer = manufacturer! },
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
@@ -46,7 +46,7 @@ public class AddVehicleValidationTests(WebApiFixture fixture) : IClassFixture<We
         var httpClient = fixture.CreateClient();
 
         var response = await httpClient.PostAsJsonAsync(
-            "/vehicles",
+            "/api/v1/vehicles",
             AddVehicleTestData.SedanRequest with { Model = model! },
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
@@ -61,7 +61,7 @@ public class AddVehicleValidationTests(WebApiFixture fixture) : IClassFixture<We
         var httpClient = fixture.CreateClient();
 
         var response = await httpClient.PostAsJsonAsync(
-            "/vehicles",
+            "/api/v1/vehicles",
             AddVehicleTestData.SedanRequest with { Year = year! },
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
@@ -76,7 +76,7 @@ public class AddVehicleValidationTests(WebApiFixture fixture) : IClassFixture<We
         var httpClient = fixture.CreateClient();
 
         var response = await httpClient.PostAsJsonAsync(
-            "/vehicles",
+            "/api/v1/vehicles",
             AddVehicleTestData.SedanRequest with { StartingBidEur = startingBid! },
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
@@ -91,7 +91,7 @@ public class AddVehicleValidationTests(WebApiFixture fixture) : IClassFixture<We
         var httpClient = fixture.CreateClient();
 
         var response = await httpClient.PostAsJsonAsync(
-            "/vehicles",
+            "/api/v1/vehicles",
             AddVehicleTestData.SedanRequest with { NumberOfDoors = numberOfDoors },
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
@@ -106,7 +106,7 @@ public class AddVehicleValidationTests(WebApiFixture fixture) : IClassFixture<We
         var httpClient = fixture.CreateClient();
 
         var response = await httpClient.PostAsJsonAsync(
-            "/vehicles",
+            "/api/v1/vehicles",
             AddVehicleTestData.HatchbackRequest with { NumberOfDoors = numberOfDoors },
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
@@ -121,7 +121,7 @@ public class AddVehicleValidationTests(WebApiFixture fixture) : IClassFixture<We
         var httpClient = fixture.CreateClient();
 
         var response = await httpClient.PostAsJsonAsync(
-            "/vehicles",
+            "/api/v1/vehicles",
             AddVehicleTestData.SuvRequest with { NumberOfSeats = numberOfSeats },
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
@@ -136,7 +136,7 @@ public class AddVehicleValidationTests(WebApiFixture fixture) : IClassFixture<We
         var httpClient = fixture.CreateClient();
 
         var response = await httpClient.PostAsJsonAsync(
-            "/vehicles",
+            "/api/v1/vehicles",
             AddVehicleTestData.TruckRequest with { LoadCapacityKg = loadCapacity },
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
