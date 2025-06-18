@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace CarAutomation.WebApi.Tests.Vehicles.AddVehicles;
 
-public class AddVehiclesTests(WebApiFixture fixture) : IClassFixture<WebApiFixture>
+public class AddVehicleValidationTests(WebApiFixture fixture) : IClassFixture<WebApiFixture>
 {
     private readonly JsonSerializerOptions _jsonOptions = new(JsonSerializerDefaults.Web) { Converters = { new JsonStringEnumConverter() } };
 
@@ -142,25 +142,5 @@ public class AddVehiclesTests(WebApiFixture fixture) : IClassFixture<WebApiFixtu
             cancellationToken: TestContext.Current.CancellationToken);
 
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-    }
-
-    [Fact]
-    public async Task Attempting_to_add_a_previously_added_vehicle_results_in_conflict()
-    {
-        var httpClient = fixture.CreateClient();
-
-        await httpClient.PostAsJsonAsync(
-            "/vehicles",
-            TestData.SedanRequest,
-            _jsonOptions,
-            cancellationToken: TestContext.Current.CancellationToken);
-
-        var response = await httpClient.PostAsJsonAsync(
-            "/vehicles",
-            TestData.SedanRequest,
-            _jsonOptions,
-            cancellationToken: TestContext.Current.CancellationToken);
-
-        Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
     }
 }
