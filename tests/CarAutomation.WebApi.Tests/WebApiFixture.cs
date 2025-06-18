@@ -10,6 +10,8 @@ namespace CarAutomation.WebApi.Tests;
 
 public sealed class WebApiFixture(PostgreSqlFixture postgreSqlFixture) : WebApplicationFactory<Program>
 {
+    public Action<AppDbContext>? ConfigureDbContext { get; set; }
+
     protected override IHost CreateHost(IHostBuilder builder)
     {
         var connectionString = new NpgsqlConnectionStringBuilder(postgreSqlFixture.Container.GetConnectionString())
@@ -26,7 +28,9 @@ public sealed class WebApiFixture(PostgreSqlFixture postgreSqlFixture) : WebAppl
 
         using (var scope = host.Services.CreateScope())
         {
-            scope.ServiceProvider.GetRequiredService<AppDbContext>().Database.EnsureCreated();
+            var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            dbContext.Database.EnsureCreated();
+            ConfigureDbContext?.Invoke(dbContext);
         }
 
         return host;

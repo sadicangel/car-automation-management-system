@@ -29,6 +29,6 @@ public static class SearchVehiclesEndpoint
 
         var vehicles = await query.ToListAsync();
 
-        return TypedResults.Ok(new SearchVehiclesResponse(vehicles.Select(SearchVehiclesLine.FromVehicle)));
+        return TypedResults.Ok(new SearchVehiclesResponse([.. vehicles.Select(SearchVehiclesLine.FromVehicle)]));
     }
 }

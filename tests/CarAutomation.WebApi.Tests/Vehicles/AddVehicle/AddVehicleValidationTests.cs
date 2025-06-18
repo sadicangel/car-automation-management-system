@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace CarAutomation.WebApi.Tests.Vehicles.AddVehicles;
+namespace CarAutomation.WebApi.Tests.Vehicles.AddVehicle;
 
 public class AddVehicleValidationTests(WebApiFixture fixture) : IClassFixture<WebApiFixture>
 {
@@ -17,7 +17,7 @@ public class AddVehicleValidationTests(WebApiFixture fixture) : IClassFixture<We
 
         var response = await httpClient.PostAsJsonAsync(
             "/vehicles",
-            TestData.SedanRequest with { Vin = vin! },
+            AddVehicleTestData.SedanRequest with { Vin = vin! },
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
 
@@ -32,7 +32,7 @@ public class AddVehicleValidationTests(WebApiFixture fixture) : IClassFixture<We
 
         var response = await httpClient.PostAsJsonAsync(
             "/vehicles",
-            TestData.SedanRequest with { Manufacturer = manufacturer! },
+            AddVehicleTestData.SedanRequest with { Manufacturer = manufacturer! },
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
 
@@ -47,7 +47,7 @@ public class AddVehicleValidationTests(WebApiFixture fixture) : IClassFixture<We
 
         var response = await httpClient.PostAsJsonAsync(
             "/vehicles",
-            TestData.SedanRequest with { Model = model! },
+            AddVehicleTestData.SedanRequest with { Model = model! },
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
 
@@ -62,7 +62,7 @@ public class AddVehicleValidationTests(WebApiFixture fixture) : IClassFixture<We
 
         var response = await httpClient.PostAsJsonAsync(
             "/vehicles",
-            TestData.SedanRequest with { Year = year! },
+            AddVehicleTestData.SedanRequest with { Year = year! },
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
 
@@ -77,7 +77,7 @@ public class AddVehicleValidationTests(WebApiFixture fixture) : IClassFixture<We
 
         var response = await httpClient.PostAsJsonAsync(
             "/vehicles",
-            TestData.SedanRequest with { StartingBidEur = startingBid! },
+            AddVehicleTestData.SedanRequest with { StartingBidEur = startingBid! },
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
 
@@ -92,7 +92,7 @@ public class AddVehicleValidationTests(WebApiFixture fixture) : IClassFixture<We
 
         var response = await httpClient.PostAsJsonAsync(
             "/vehicles",
-            TestData.SedanRequest with { NumberOfDoors = numberOfDoors },
+            AddVehicleTestData.SedanRequest with { NumberOfDoors = numberOfDoors },
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
 
@@ -107,7 +107,7 @@ public class AddVehicleValidationTests(WebApiFixture fixture) : IClassFixture<We
 
         var response = await httpClient.PostAsJsonAsync(
             "/vehicles",
-            TestData.HatchbackRequest with { NumberOfDoors = numberOfDoors },
+            AddVehicleTestData.HatchbackRequest with { NumberOfDoors = numberOfDoors },
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
 
@@ -122,7 +122,7 @@ public class AddVehicleValidationTests(WebApiFixture fixture) : IClassFixture<We
 
         var response = await httpClient.PostAsJsonAsync(
             "/vehicles",
-            TestData.SuvRequest with { NumberOfSeats = numberOfSeats },
+            AddVehicleTestData.SuvRequest with { NumberOfSeats = numberOfSeats },
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
 
@@ -137,7 +137,7 @@ public class AddVehicleValidationTests(WebApiFixture fixture) : IClassFixture<We
 
         var response = await httpClient.PostAsJsonAsync(
             "/vehicles",
-            TestData.TruckRequest with { LoadCapacityKg = loadCapacity },
+            AddVehicleTestData.TruckRequest with { LoadCapacityKg = loadCapacity },
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
 

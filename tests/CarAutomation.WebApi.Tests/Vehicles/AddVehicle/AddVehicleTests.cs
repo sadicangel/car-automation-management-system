@@ -4,7 +4,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using CarAutomation.WebApi.Vehicles.AddVehicle;
 
-namespace CarAutomation.WebApi.Tests.Vehicles.AddVehicles;
+namespace CarAutomation.WebApi.Tests.Vehicles.AddVehicle;
 
 public sealed class AddVehicleTests(PostgreSqlFixture postgreSqlFixture) : IAsyncDisposable
 {
@@ -21,7 +21,7 @@ public sealed class AddVehicleTests(PostgreSqlFixture postgreSqlFixture) : IAsyn
 
         var response = await httpClient.PostAsJsonAsync(
             "/vehicles",
-            TestData.SedanRequest,
+            AddVehicleTestData.SedanRequest,
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
 
@@ -39,13 +39,13 @@ public sealed class AddVehicleTests(PostgreSqlFixture postgreSqlFixture) : IAsyn
 
         await httpClient.PostAsJsonAsync(
             "/vehicles",
-            TestData.SedanRequest,
+            AddVehicleTestData.SedanRequest,
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
 
         var response = await httpClient.PostAsJsonAsync(
             "/vehicles",
-            TestData.SedanRequest,
+            AddVehicleTestData.SedanRequest,
             _jsonOptions,
             cancellationToken: TestContext.Current.CancellationToken);
 

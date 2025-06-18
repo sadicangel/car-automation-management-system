@@ -2,7 +2,7 @@
 
 namespace CarAutomation.WebApi.Vehicles.SearchVehicles;
 
-public record SearchVehiclesResponse(IEnumerable<SearchVehiclesLine> Vehicles);
+public record SearchVehiclesResponse(List<SearchVehiclesLine> Vehicles);
 
 public record SearchVehiclesLine(
     Guid Id,

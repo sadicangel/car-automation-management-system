@@ -1,11 +1,11 @@
 ﻿using CarAutomation.WebApi.Vehicles;
 using CarAutomation.WebApi.Vehicles.AddVehicle;
 
-namespace CarAutomation.WebApi.Tests.Vehicles.AddVehicles;
+namespace CarAutomation.WebApi.Tests.Vehicles.AddVehicle;
 
-public static class TestData
+public static class AddVehicleTestData
 {
-    public static readonly AddVehicleRequest SedanRequest = new(
+    public static AddVehicleRequest SedanRequest { get; } = new(
         Vin: "3FAHP0HA6AR123456",
         Type: VehicleType.Sedan,
         Manufacturer: "Honda",
@@ -17,7 +17,7 @@ public static class TestData
         StartingBidEur: 12000.00m
     );
 
-    public static readonly AddVehicleRequest HatchbackRequest = new(
+    public static AddVehicleRequest HatchbackRequest { get; } = new(
         Vin: "WVWZZZ1KZAW000123",
         Type: VehicleType.Hatchback,
         Manufacturer: "Volkswagen",
@@ -29,7 +29,7 @@ public static class TestData
         StartingBidEur: 9500.00m
     );
 
-    public static readonly AddVehicleRequest TruckRequest = new(
+    public static AddVehicleRequest TruckRequest { get; } = new(
         Vin: "1FTFW1ET1EFA12345",
         Type: VehicleType.Truck,
         Manufacturer: "Ford",
@@ -41,7 +41,7 @@ public static class TestData
         StartingBidEur: 25000.00m
     );
 
-    public static readonly AddVehicleRequest SuvRequest = new(
+    public static AddVehicleRequest SuvRequest { get; } = new(
         Vin: "1HGCM82633A004352",
         Type: VehicleType.Suv,
         Manufacturer: "Toyota",
