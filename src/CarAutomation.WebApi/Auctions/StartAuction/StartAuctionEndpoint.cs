@@ -23,13 +23,13 @@ public static class StartAuctionEndpoint
             return TypedResults.BadRequest($"An auction is already active for vehicle '{request.VehicleId}'");
         }
 
-        var auction = new Auction(
-            AuctionId: default,
-            VehicleId: vehicle.Id,
-            StartingBidEur: vehicle.StartingBidEur,
-            IsActive: true,
-            StartDate: timeProvider.GetUtcNow(),
-            EndDate: null);
+        var auction = new Auction
+        {
+            AuctionId = default,
+            VehicleId = vehicle.Id,
+            StartingBidEur = vehicle.StartingBidEur,
+            StartDate = timeProvider.GetUtcNow(),
+        };
 
         dbContext.Auctions.Add(auction);
         await dbContext.SaveChangesAsync();

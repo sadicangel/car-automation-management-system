@@ -9,7 +9,8 @@ public static class VehiclesEndpoints
     {
         var vehicles = endpoints
             .MapGroup("/vehicles")
-            .WithValidation();
+            .WithValidation()
+            .WithTags(nameof(VehiclesEndpoints));
 
         vehicles.MapPost("/", AddVehicleEndpoint.AddVehicle);
 

@@ -1,4 +1,5 @@
 ﻿using CarAutomation.Domain;
+using CarAutomation.Domain.Vehicles;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,8 +10,16 @@ public static class SearchVehiclesEndpoint
     public static async Task<Ok<SearchVehiclesResponse>> SearchVehicles([AsParameters] SearchVehiclesRequest request, AppDbContext dbContext)
     {
         var query = dbContext.Vehicles.AsNoTracking();
-        if (request.Type.HasValue)
-            query = query.Where(x => x.Type == request.Type.Value);
+
+        query = request.Type switch
+        {
+            VehicleType.Sedan => query.OfType<Sedan>(),
+            VehicleType.Suv => query.OfType<Suv>(),
+            VehicleType.Hatchback => query.OfType<Hatchback>(),
+            VehicleType.Truck => query.OfType<Truck>(),
+            null => query,
+            _ => throw new InvalidOperationException($"Unsupported vehicle type: {request.Type}")
+        };
         if (!string.IsNullOrEmpty(request.Manufacturer))
             query = query.Where(x => x.Manufacturer == request.Manufacturer);
         if (!string.IsNullOrEmpty(request.Model))
@@ -20,6 +29,6 @@ public static class SearchVehiclesEndpoint
 
         var vehicles = await query.ToListAsync();
 
-        return TypedResults.Ok(SearchVehiclesResponse.From(vehicles));
+        return TypedResults.Ok(new SearchVehiclesResponse(vehicles.Select(SearchVehiclesLine.FromVehicle)));
     }
 }

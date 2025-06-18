@@ -41,4 +41,49 @@ public record AddVehicleRequest(
         if (Type is VehicleType.Truck && LoadCapacityKg is not > 0)
             yield return new ValidationResult($"'{Type}' vehicles must specify a load capacity greater than 0");
     }
+
+    public Vehicle ToVehicle() => Type switch
+    {
+        VehicleType.Sedan => new Sedan
+        {
+            Vin = Vin,
+            Manufacturer = Manufacturer,
+            Model = Model,
+            Year = Year,
+            NumberOfDoors = NumberOfDoors ?? throw new InvalidOperationException($"Invalid number of doors"),
+            StartingBidEur = StartingBidEur
+        },
+
+        VehicleType.Hatchback => new Hatchback
+        {
+            Vin = Vin,
+            Manufacturer = Manufacturer,
+            Model = Model,
+            Year = Year,
+            NumberOfDoors = NumberOfDoors ?? throw new InvalidOperationException($"Invalid number of doors"),
+            StartingBidEur = StartingBidEur
+        },
+
+        VehicleType.Suv => new Suv
+        {
+            Vin = Vin,
+            Manufacturer = Manufacturer,
+            Model = Model,
+            Year = Year,
+            NumberOfSeats = NumberOfSeats ?? throw new InvalidOperationException($"Invalid number of seats"),
+            StartingBidEur = StartingBidEur
+        },
+
+        VehicleType.Truck => new Truck
+        {
+            Vin = Vin,
+            Manufacturer = Manufacturer,
+            Model = Model,
+            Year = Year,
+            LoadCapacityKg = LoadCapacityKg ?? throw new InvalidOperationException($"Invalid load capacity"),
+            StartingBidEur = StartingBidEur
+        },
+
+        _ => throw new ArgumentOutOfRangeException(nameof(Type), Type, "Unknown vehicle type")
+    };
 }

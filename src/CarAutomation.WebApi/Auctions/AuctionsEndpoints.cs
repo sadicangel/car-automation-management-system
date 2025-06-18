@@ -10,7 +10,8 @@ public static class AuctionsEndpoints
     {
         var actioning = endpoints
             .MapGroup("/auctioning")
-            .WithValidation();
+            .WithValidation()
+            .WithTags(nameof(AuctionsEndpoints));
 
         actioning.MapPost("/start", StartAuctionEndpoint.StartAuction);
 

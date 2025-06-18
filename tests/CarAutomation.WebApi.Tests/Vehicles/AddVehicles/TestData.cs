@@ -1,4 +1,4 @@
-﻿using CarAutomation.Domain.Vehicles;
+﻿using CarAutomation.WebApi.Vehicles;
 using CarAutomation.WebApi.Vehicles.AddVehicle;
 
 namespace CarAutomation.WebApi.Tests.Vehicles.AddVehicles;

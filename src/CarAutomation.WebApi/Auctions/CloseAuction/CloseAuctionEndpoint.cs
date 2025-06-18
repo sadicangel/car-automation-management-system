@@ -8,7 +8,8 @@ public static class CloseAuctionEndpoint
 {
     public static async Task<Results<Ok, NotFound, ValidationProblem>> CloseAuction(
         CloseAuctionRequest request,
-        AppDbContext dbContext)
+        AppDbContext dbContext,
+        TimeProvider timeProvider)
     {
         var auction = await dbContext.FindAsync<Auction>(request.AuctionId);
         if (auction is null)
@@ -24,7 +25,7 @@ public static class CloseAuctionEndpoint
             });
         }
 
-        auction.IsActive = false;
+        auction.EndDate = timeProvider.GetUtcNow();
 
         dbContext.Update(auction);
         await dbContext.SaveChangesAsync();

@@ -14,6 +14,12 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     {
         modelBuilder.Entity<Vehicle>(t =>
         {
+            t.HasDiscriminator<string>("VehicleType")
+                .HasValue<Sedan>(nameof(Sedan))
+                .HasValue<Hatchback>(nameof(Hatchback))
+                .HasValue<Suv>(nameof(Suv))
+                .HasValue<Truck>(nameof(Truck));
+
             t.HasIndex(x => x.Vin).IsUnique();
             t.HasIndex(x => x.Manufacturer);
             t.HasIndex(x => x.Model);

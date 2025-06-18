@@ -31,11 +31,6 @@ app.UseHttpsRedirection();
 app.MapVehiclesEndpoints();
 app.MapAuctionsEndpoints();
 
-using (var scope = app.Services.CreateScope())
-{
-    scope.ServiceProvider.GetRequiredService<AppDbContext>().Database.EnsureCreated();
-}
-
 app.Run();
 
 public partial class Program;

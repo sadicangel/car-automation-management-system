@@ -2,20 +2,7 @@
 
 namespace CarAutomation.WebApi.Vehicles.SearchVehicles;
 
-public record SearchVehiclesResponse(List<SearchVehiclesLine> Vehicles)
-{
-    public static SearchVehiclesResponse From(List<Vehicle> vehicles) => new([.. vehicles.Select(vehicle => new SearchVehiclesLine(
-        Id: vehicle.Id,
-        Vin: vehicle.Vin,
-        Type: vehicle.Type,
-        Manufacturer: vehicle.Manufacturer,
-        Model: vehicle.Model,
-        Year: vehicle.Year,
-        NumberOfDoors: vehicle.NumberOfDoors,
-        NumberOfSeats: vehicle.NumberOfSeats,
-        LoadCapacityKg: vehicle.LoadCapacityKg,
-        StartingBidEur: vehicle.StartingBidEur))]);
-}
+public record SearchVehiclesResponse(IEnumerable<SearchVehiclesLine> Vehicles);
 
 public record SearchVehiclesLine(
     Guid Id,
@@ -27,4 +14,61 @@ public record SearchVehiclesLine(
     int? NumberOfDoors,
     int? NumberOfSeats,
     double? LoadCapacityKg,
-    decimal StartingBidEur);
+    decimal StartingBidEur)
+{
+    public static SearchVehiclesLine FromVehicle(Vehicle vehicle)
+    {
+        return vehicle switch
+        {
+            Sedan sedan => new(
+                sedan.Id,
+                sedan.Vin,
+                VehicleType.Sedan,
+                sedan.Manufacturer,
+                sedan.Model,
+                sedan.Year,
+                sedan.NumberOfDoors,
+                NumberOfSeats: null,
+                LoadCapacityKg: null,
+                sedan.StartingBidEur),
+
+            Hatchback hatchback => new(
+                hatchback.Id,
+                hatchback.Vin,
+                VehicleType.Hatchback,
+                hatchback.Manufacturer,
+                hatchback.Model,
+                hatchback.Year,
+                hatchback.NumberOfDoors,
+                NumberOfSeats: null,
+                LoadCapacityKg: null,
+                hatchback.StartingBidEur),
+
+            Suv suv => new(
+                suv.Id,
+                suv.Vin,
+                VehicleType.Suv,
+                suv.Manufacturer,
+                suv.Model,
+                suv.Year,
+                NumberOfDoors: null,
+                suv.NumberOfSeats,
+                LoadCapacityKg: null,
+                suv.StartingBidEur),
+
+            Truck truck => new(
+                truck.Id,
+                truck.Vin,
+                VehicleType.Truck,
+                truck.Manufacturer,
+                truck.Model,
+                truck.Year,
+                NumberOfDoors: null,
+                NumberOfSeats: null,
+                truck.LoadCapacityKg,
+                truck.StartingBidEur),
+
+            _ => throw new InvalidOperationException("Unknown vehicle type")
+        };
+    }
+}

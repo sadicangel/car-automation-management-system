@@ -1,5 +1,4 @@
 ﻿using CarAutomation.Domain;
-using CarAutomation.Domain.Vehicles;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -12,21 +11,11 @@ public static class AddVehicleEndpoint
     {
         try
         {
-            var entry = dbContext.Vehicles.Add(new Vehicle(
-                Id: default,
-                Vin: request.Vin,
-                Type: request.Type,
-                Manufacturer: request.Manufacturer,
-                Model: request.Model,
-                Year: request.Year,
-                NumberOfDoors: request.NumberOfDoors,
-                NumberOfSeats: request.NumberOfSeats,
-                LoadCapacityKg: request.LoadCapacityKg,
-                StartingBidEur: request.StartingBidEur));
+            var entry = dbContext.Vehicles.Add(request.ToVehicle());
 
             await dbContext.SaveChangesAsync();
 
-            return TypedResults.Created(default(string), AddVehicleResponse.From(entry.Entity));
+            return TypedResults.Created(default(string), AddVehicleResponse.FromVehicle(entry.Entity));
         }
         catch (DbUpdateException ex) when (ex.InnerException is PostgresException { SqlState: PostgresErrorCodes.UniqueViolation })
         {
