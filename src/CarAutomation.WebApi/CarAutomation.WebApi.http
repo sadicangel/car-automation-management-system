@@ -1,6 +1,45 @@
-@WebApi_HostAddress = http://localhost:5033
+@WebApi_HostAddress = https://localhost:7208/api/v1
 
-GET {{WebApi_HostAddress}}/weatherforecast/
+# @name AddVehicle
+POST {{WebApi_HostAddress}}/vehicles/
 Accept: application/json
+Content-Type: application/json
+
+{
+  "vin": "3FAHP0HA6AR123456",
+  "type": "Sedan",
+  "manufacturer": "Honda",
+  "model": "Accord",
+  "year": 2021,
+  "numberOfDoors": 4,
+  "startingBidEur": 1500
+}
 
 ###
+
+# @name SearchVehicles
+GET {{WebApi_HostAddress}}/vehicles?type=Sedan
+
+###
+
+# @name StartAuction
+POST {{WebApi_HostAddress}}/auctions/start
+Accept: application/json
+Content-Type: application/json
+
+{
+    "vehicleId": "{{SearchVehicles.response.body.vehicles[0].id}}"
+}
+
+###
+
+# @name PlaceBid
+POST {{WebApi_HostAddress}}/auctions/bid
+Accept: application/json
+Content-Type: application/json
+
+{
+    "auctionId": "{{StartAuction.response.body.auctionId}}",
+    "bidAmount": 2000,
+    "userEmail": "user1@email.com"
+}

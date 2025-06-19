@@ -41,7 +41,7 @@ public static class CloseAuctionEndpoint
         if (highestBid is not null)
         {
             logger.LogInformation(
-                "User {@UserEmail} is the auction winnder with a bid of {@Bid}",
+                "User {@UserEmail} is the auction winner with a bid of {@Bid}",
                 highestBid.BidderEmail,
                 highestBid.Amount);
 
