@@ -29,7 +29,7 @@ public sealed class PlaceBidTests(PostgreSqlFixture postgreSqlFixture) : IAsyncD
 
         var response = await httpClient.PostAsJsonAsync(
             "/api/v1/auctions/bid",
-            new PlaceBidRequest(AuctionId: Guid.NewGuid(), BidAmount: 9999),
+            new PlaceBidRequest(AuctionId: Guid.NewGuid(), BidAmount: 9999, "user3@email.com"),
             _jsonOptions,
             TestContext.Current.CancellationToken);
 
@@ -43,7 +43,21 @@ public sealed class PlaceBidTests(PostgreSqlFixture postgreSqlFixture) : IAsyncD
 
         var response = await httpClient.PostAsJsonAsync(
             "/api/v1/auctions/bid",
-            new PlaceBidRequest(PlaceBidTestData.ClosedAuction.AuctionId, BidAmount: 20000),
+            new PlaceBidRequest(PlaceBidTestData.ClosedAuction.AuctionId, BidAmount: 20000, "user3@email.com"),
+            _jsonOptions,
+            TestContext.Current.CancellationToken);
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task Attempting_to_place_a_bid_with_an_invalid_email_results_in_bad_request()
+    {
+        var httpClient = _fixture.CreateClient();
+
+        var response = await httpClient.PostAsJsonAsync(
+            "/api/v1/auctions/bid",
+            new PlaceBidRequest(PlaceBidTestData.ActiveAuction.AuctionId, BidAmount: 20000, "invalid"),
             _jsonOptions,
             TestContext.Current.CancellationToken);
 
@@ -58,7 +72,7 @@ public sealed class PlaceBidTests(PostgreSqlFixture postgreSqlFixture) : IAsyncD
 
         var response = await httpClient.PostAsJsonAsync(
             "/api/v1/auctions/bid",
-            new PlaceBidRequest(PlaceBidTestData.ActiveAuction.AuctionId, bidAmount),
+            new PlaceBidRequest(PlaceBidTestData.ActiveAuction.AuctionId, bidAmount, "user3@email.com"),
             _jsonOptions,
             TestContext.Current.CancellationToken);
 
@@ -72,7 +86,10 @@ public sealed class PlaceBidTests(PostgreSqlFixture postgreSqlFixture) : IAsyncD
 
         var response = await httpClient.PostAsJsonAsync(
             "/api/v1/auctions/bid",
-            new PlaceBidRequest(PlaceBidTestData.ActiveAuction.AuctionId, PlaceBidTestData.ActiveAuction.StartingBidEur - 1),
+            new PlaceBidRequest(
+                PlaceBidTestData.ActiveAuction.AuctionId,
+                BidAmount: 12000m,
+                "user3@email.com"),
             _jsonOptions,
             TestContext.Current.CancellationToken);
 
@@ -86,7 +103,10 @@ public sealed class PlaceBidTests(PostgreSqlFixture postgreSqlFixture) : IAsyncD
 
         var response = await httpClient.PostAsJsonAsync(
             "/api/v1/auctions/bid",
-            new PlaceBidRequest(PlaceBidTestData.ActiveAuction.AuctionId, PlaceBidTestData.ActiveAuction.Bids.Select(x => x.Amount).Max() - 1),
+            new PlaceBidRequest(
+                PlaceBidTestData.ActiveAuction.AuctionId,
+                BidAmount: 12500m,
+                "user3@email.com"),
             _jsonOptions,
             TestContext.Current.CancellationToken);
 
@@ -100,10 +120,30 @@ public sealed class PlaceBidTests(PostgreSqlFixture postgreSqlFixture) : IAsyncD
 
         var response = await httpClient.PostAsJsonAsync(
             "/api/v1/auctions/bid",
-            new PlaceBidRequest(PlaceBidTestData.ActiveAuction.AuctionId, PlaceBidTestData.ActiveAuction.Bids.Select(x => x.Amount).Max()),
+            new PlaceBidRequest(
+                PlaceBidTestData.ActiveAuction.AuctionId,
+                BidAmount: 13000m,
+                "user3@email.com"),
             _jsonOptions,
             TestContext.Current.CancellationToken);
 
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task Placing_a_bid_higher_than_both_starting_bid_and_current_highest_bid_results_in_it_being_placed()
+    {
+        var httpClient = _fixture.CreateClient();
+
+        var response = await httpClient.PostAsJsonAsync(
+            "/api/v1/auctions/bid",
+            new PlaceBidRequest(
+                PlaceBidTestData.ActiveAuction.AuctionId,
+                BidAmount: 13500m,
+                "user3@email.com"),
+            _jsonOptions,
+            TestContext.Current.CancellationToken);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 }

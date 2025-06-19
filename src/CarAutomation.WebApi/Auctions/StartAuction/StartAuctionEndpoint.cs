@@ -10,7 +10,8 @@ public static class StartAuctionEndpoint
     public static async Task<Results<Ok<StartAuctionResponse>, ValidationProblem>> StartAuction(
         StartAuctionRequest request,
         AppDbContext dbContext,
-        TimeProvider timeProvider)
+        TimeProvider timeProvider,
+        ILogger<StartAuctionRequest> logger)
     {
         var vehicle = await dbContext.FindAsync<Vehicle>(request.VehicleId);
         if (vehicle is null)
@@ -39,6 +40,8 @@ public static class StartAuctionEndpoint
 
         dbContext.Auctions.Add(auction);
         await dbContext.SaveChangesAsync();
+
+        logger.LogInformation("A new auction has been started {@Auction}", auction);
 
         return TypedResults.Ok(new StartAuctionResponse(
             auction.AuctionId,

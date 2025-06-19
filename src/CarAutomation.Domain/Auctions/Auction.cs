@@ -14,4 +14,4 @@ public record Auction
     public List<Bid> Bids { get; init; } = [];
 }
 
-public record Bid(decimal Amount, DateTimeOffset Timestamp, Guid BidderId);
+public record Bid(decimal Amount, string BidderEmail, DateTimeOffset Timestamp);

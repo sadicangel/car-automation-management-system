@@ -18,6 +18,7 @@ public sealed class CloseAuctionTests(PostgreSqlFixture postgreSqlFixture) : IAs
     {
         dbContext.Vehicles.Add(CloseAuctionTestData.Vehicle);
         dbContext.Auctions.Add(CloseAuctionTestData.ActiveAuction);
+        dbContext.Auctions.Add(CloseAuctionTestData.ActiveAuctionWithBids);
         dbContext.Auctions.Add(CloseAuctionTestData.ClosedAuction);
         dbContext.SaveChanges();
     }
@@ -51,7 +52,7 @@ public sealed class CloseAuctionTests(PostgreSqlFixture postgreSqlFixture) : IAs
     }
 
     [Fact]
-    public async Task Closing_an_active_auction_results_in_the_auction_being_closed()
+    public async Task Closing_an_active_auction_without_any_bids_results_in_the_auction_being_closed_with_no_highest_bid()
     {
         var httpClient = _fixture.CreateClient();
 
@@ -65,7 +66,24 @@ public sealed class CloseAuctionTests(PostgreSqlFixture postgreSqlFixture) : IAs
 
         Assert.NotNull(auction);
         Assert.Equal(CloseAuctionTestData.Vehicle.Id, auction.VehicleId);
-        Assert.Equal(DateTimeOffset.UtcNow.Date, auction.EndDate.Date);
-        Assert.Equal(0, auction.HighestBidEur);
+        Assert.Null(auction.HighestBidEur);
+    }
+
+    [Fact]
+    public async Task Closing_an_active_auction_with_bids_results_in_the_auction_being_closed_and_having_a_highest_bid()
+    {
+        var httpClient = _fixture.CreateClient();
+
+        var response = await httpClient.PostAsJsonAsync(
+            "/api/v1/auctions/close",
+            new CloseAuctionRequest(CloseAuctionTestData.ActiveAuctionWithBids.AuctionId),
+            _jsonOptions,
+            TestContext.Current.CancellationToken);
+
+        var auction = await response.Content.ReadFromJsonAsync<CloseAuctionResponse>(_jsonOptions, TestContext.Current.CancellationToken);
+
+        Assert.NotNull(auction);
+        Assert.Equal(CloseAuctionTestData.Vehicle.Id, auction.VehicleId);
+        Assert.Equal(16000m, auction.HighestBidEur);
     }
 }

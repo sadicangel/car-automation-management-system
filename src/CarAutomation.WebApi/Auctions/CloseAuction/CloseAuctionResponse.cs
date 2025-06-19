@@ -5,4 +5,4 @@ public record CloseAuctionResponse(
     Guid VehicleId,
     DateTimeOffset StartDate,
     DateTimeOffset EndDate,
-    decimal HighestBidEur);
+    decimal? HighestBidEur);

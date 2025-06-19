@@ -9,7 +9,8 @@ public static class PlaceBidEndpoint
     public static async Task<Results<Ok, NotFound, ValidationProblem>> PlaceBid(
         PlaceBidRequest request,
         AppDbContext dbContext,
-        TimeProvider timeProvider)
+        TimeProvider timeProvider,
+        ILogger<PlaceBidRequest> logger)
     {
         var auction = await dbContext.FindAsync<Auction>(request.AuctionId);
         if (auction is null)
@@ -46,10 +47,15 @@ public static class PlaceBidEndpoint
             }
         }
 
-        auction.Bids.Add(new Bid(request.BidAmount, timeProvider.GetUtcNow(), default));
+        auction.Bids.Add(new Bid(request.BidAmount, request.UserEmail, timeProvider.GetUtcNow()));
 
         dbContext.Auctions.Update(auction);
         await dbContext.SaveChangesAsync();
+
+        logger.LogInformation("User {@UserEmail} has placed a bid of {@Bid} in auction {@Auction}",
+            request.UserEmail,
+            request.BidAmount,
+            auction);
 
         return TypedResults.Ok();
     }

@@ -25,8 +25,8 @@ public static class PlaceBidTestData
         StartingBidEur = 12000.00m,
         Bids =
         [
-            new Bid(12500.00m, DateTimeOffset.UtcNow.AddMinutes(-30), new Guid("A1B2C3D4-E5F6-7A8B-9C0D-E1F2A3B4C5D6")),
-            new Bid(13000.00m, DateTimeOffset.UtcNow.AddMinutes(-10), new Guid("A1B2C3D4-E5F6-7A8B-9C0D-E1F2A3B4C5D7")),
+            new Bid(12500.00m, "user1@email.com", DateTimeOffset.UtcNow.AddMinutes(-30)),
+            new Bid(13000.00m, "user2@email.com", DateTimeOffset.UtcNow.AddMinutes(-10)),
         ],
     };
 

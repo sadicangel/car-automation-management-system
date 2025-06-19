@@ -7,7 +7,10 @@ namespace CarAutomation.WebApi.Vehicles.AddVehicle;
 
 public static class AddVehicleEndpoint
 {
-    public static async Task<Results<Created<AddVehicleResponse>, Conflict<string>>> AddVehicle(AddVehicleRequest request, AppDbContext dbContext)
+    public static async Task<Results<Ok<AddVehicleResponse>, Conflict<string>>> AddVehicle(
+        AddVehicleRequest request,
+        AppDbContext dbContext,
+        ILogger<AddVehicleRequest> logger)
     {
         try
         {
@@ -15,7 +18,9 @@ public static class AddVehicleEndpoint
 
             await dbContext.SaveChangesAsync();
 
-            return TypedResults.Created(default(string), AddVehicleResponse.FromVehicle(entry.Entity));
+            logger.LogInformation("A new vehicle has been added: {@Vehicle}", entry.Entity);
+
+            return TypedResults.Ok(AddVehicleResponse.FromVehicle(entry.Entity));
         }
         catch (DbUpdateException ex) when (ex.InnerException is PostgresException { SqlState: PostgresErrorCodes.UniqueViolation })
         {

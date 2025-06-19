@@ -26,6 +26,14 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             t.HasIndex(x => x.Year);
         });
 
+        modelBuilder.Entity<Sedan>()
+            .Property(x => x.NumberOfDoors)
+            .HasColumnName(nameof(Sedan.NumberOfDoors));
+
+        modelBuilder.Entity<Hatchback>()
+            .Property(x => x.NumberOfDoors)
+            .HasColumnName(nameof(Hatchback.NumberOfDoors));
+
         modelBuilder.Entity<Auction>(t =>
         {
             t.HasKey(x => x.AuctionId);
