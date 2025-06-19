@@ -43,3 +43,14 @@ Content-Type: application/json
     "bidAmount": 2000,
     "userEmail": "user1@email.com"
 }
+
+###
+
+# @name CloseAuction
+POST {{WebApi_HostAddress}}/auctions/close
+Accept: application/json
+Content-Type: application/json
+
+{
+    "auctionId": "{{StartAuction.response.body.auctionId}}"
+}
